@@ -3,18 +3,19 @@ import { Board } from "./components/Board"
 import { Button, Container, Navbar } from 'react-bootstrap'
 import { DifficultySelect } from './components/DifficultySelect'
 import axios from "axios"
+const API_KEY = import.meta.env.VITE_PRIVATE_KEY 
 
 function App() {
   const [newGame, setNewGame] = useState(true)
   const [board, setBoard] = useState<string[]>([])
- 
+
   const handleDiffSelect = (e: string) => {
     const options = {
       method: 'GET',
       url: 'https://sudoku-generator1.p.rapidapi.com/sudoku/generate',
       params: {difficulty: e},
       headers: {
-        'X-RapidAPI-Key': 'db7c32ae4amsh5bb807b8978e196p15385ejsn457f9fcea245',
+        'X-RapidAPI-Key': API_KEY ,
         'X-RapidAPI-Host': 'sudoku-generator1.p.rapidapi.com'
       }
     }
