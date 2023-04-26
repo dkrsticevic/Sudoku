@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Board } from "./components/Board"
 import { Button, Container, Navbar } from 'react-bootstrap'
 import { DifficultySelect } from './components/DifficultySelect'
@@ -7,7 +7,7 @@ const API_KEY = import.meta.env.VITE_PRIVATE_KEY
 
 function App() {
   const [newGame, setNewGame] = useState(true)
-  const [board, setBoard] = useState<string[]>([])
+  const [board, setBoard] = useState<number[]>([])
 
   const handleDiffSelect = (e: string) => {
     const options = {
