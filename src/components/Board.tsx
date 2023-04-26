@@ -40,8 +40,14 @@ export function Board({newBoard}: BoardProps) {
             return
         }
         if (arrowMap.has(id) && error === ""){
-            if (parseInt(selectedCell) + arrowMap.get(id)! >= 0 && parseInt(selectedCell) + arrowMap.get(id)! < 81){
-                setSelectedCell((parseInt(selectedCell) + arrowMap.get(id)!).toString())
+            const temp = parseInt(selectedCell) + arrowMap.get(id)!;
+            if (temp >= 0 && temp < 81){
+                const col = (temp%9)
+                const row = Math.floor(temp /9)
+                setSelectedCell((temp).toString())
+                setSelectedCol(col.toString())
+                setSelectedRow(row.toString())
+                setSelectedGroup((Math.floor((row)/3)*3 + Math.floor((col)/3)).toString())
             }
         }
         if (newBoard[parseInt(selectedCell)] !== "0")
@@ -129,7 +135,7 @@ export function Board({newBoard}: BoardProps) {
 
     return(
             
-            <Card style={{marginTop: "50px", display: "flex", justifyContent: "center", alignItems: "center", width: "650px", aspectRatio: "8/10"}}>
+            <Card style={{marginTop: "20px", marginBottom: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px", aspectRatio: "8/10"}}>
             <Card.Title>
                 {won ? "You won!" : ""}
             </Card.Title>

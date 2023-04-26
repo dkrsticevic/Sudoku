@@ -28,7 +28,7 @@ export function Cell({ id, row, col, group, value, selected, selectedValue, hand
         groupSelected === group ? "lightblue" : 
         rowSelected === row ? "lightblue" : colSelected === col ? "lightblue" : "",
         }}> 
-           <span style={{color: "black", fontSize: "4vmin", fontWeight: def ? "bold" : "light"}}>{value !== "0" ? value : ""}</span>
+           <span style={{fontSize: "1.5rem", fontWeight: def ? "bold" : ""}}>{value !== "0" ? value : ""}</span>
         </div>
     )
 

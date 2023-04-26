@@ -9,7 +9,7 @@ export function DifficultySelect({handleDiffSelect}: DifficultySelectProps) {
     const [optionSelected, setOptionSelected] = useState("")
 
     return (
-        <Card style={{marginTop: "50px", display: "flex", justifyContent: "center", alignItems: "center", width: "650px" }}> 
+        <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px" }}> 
         <Card.Body> 
           {optionSelected === "" ?
           <>
