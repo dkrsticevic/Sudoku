@@ -124,7 +124,7 @@ export function Board({newBoard}: BoardProps) {
 
     function checkWin() {
         let temp: string = JSON.stringify(board)
-        if (!temp.includes(":\"0")){
+        if (!temp.replaceAll("0\":","").includes("0")){
             setSelectedCell(-1)
             setSelectedCol(-1)
             setSelectedGroup(-1)
