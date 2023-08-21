@@ -1,3 +1,5 @@
+import { useState } from "react"
+
 type CellProps = {
     id: number, 
     row: number, 
@@ -12,11 +14,14 @@ type CellProps = {
     colSelected: number, 
     def: boolean,
     error: number, 
+    planned: string
 }
 
 
 export function Cell({ id, row, col, group, value, selected, selectedValue, handleCellClick, 
-                    groupSelected, rowSelected, colSelected, def, error}: CellProps) {
+                    groupSelected, rowSelected, colSelected, def, error, planned}: CellProps) {
+
+
     return ( 
         <div id={id+","+row+","+col+","+group} onClick={handleCellClick}
         style={{ display: "flex", width: "10%", aspectRatio: "1", border: "1px solid black", 
@@ -29,6 +34,7 @@ export function Cell({ id, row, col, group, value, selected, selectedValue, hand
         rowSelected == row ? "lightblue" : colSelected == col ? "lightblue" : "",
         }}> 
            <span style={{fontSize: "1.5rem", fontWeight: def ? "bold" : ""}}>{value != 0 ? value : ""}</span>
+           <span>{planned}</span>
         </div>
     )
 

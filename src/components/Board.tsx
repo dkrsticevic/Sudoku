@@ -16,12 +16,14 @@ type BoardProps = {
 
 export function Board({newBoard}: BoardProps) {
     const [board, setBoard] = useState<number[]>(newBoard)
+    const [planned, setPlanned] = useState<string[]>(Array(81).fill(""))
     const [selectedCell, setSelectedCell] = useState<number>(-1)
     const [won, setWon] = useState(false)
     const [selectedGroup, setSelectedGroup] = useState<number>(-1)
     const [selectedRow, setSelectedRow] = useState<number>(-1)
     const [selectedCol, setSelectedCol] = useState<number>(-1)
     const [error, setError] = useState(-1)
+    const [plan, setPlan] = useState(true)
 
     useEffect(() => {
         document.addEventListener('keydown', keyDownEvent)
@@ -37,6 +39,9 @@ export function Board({newBoard}: BoardProps) {
             return
         }        
         if (won){
+            return
+        }if (plan){
+            changePlanValue(id)
             return
         }
         if (arrowMap.has(id) && error === -1){
@@ -65,6 +70,20 @@ export function Board({newBoard}: BoardProps) {
             const tempBoard = [...board]
             tempBoard[selectedCell] = parseInt(id)
             setBoard(tempBoard) 
+    }
+
+    const changePlanValue = (id: string) => {
+        if (keys.includes(id) && id != "0"){
+            let p = [...planned]
+            let value = p[selectedCell]
+            if (!value.includes(id)){
+                p[selectedCell] = p[selectedCell] ? p[selectedCell] + id : id
+            }else{
+                p[selectedCell] = p[selectedCell].replace(id, '')
+            }
+
+            setPlanned(p)
+        }
     }
 
     useEffect(() => {
@@ -148,6 +167,7 @@ export function Board({newBoard}: BoardProps) {
                 <Cell id={((i*9)+k)} row={i} col={k} group={(Math.floor((i)/3)*3 + Math.floor((k)/3))}
                  value={board[(i*9)+k]} selected={selectedCell} selectedValue={board[selectedCell]} handleCellClick={handleCellClick}
                  groupSelected={selectedGroup} rowSelected={selectedRow} colSelected={selectedCol} def={newBoard[(i*9)+k] != 0} error={error}
+                 planned={planned[(i*9)+k]}
                  ></Cell>
                 )}
             </Row> )}
