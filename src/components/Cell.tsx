@@ -20,8 +20,6 @@ type CellProps = {
 
 export function Cell({ id, row, col, group, value, selected, selectedValue, handleCellClick, 
                     groupSelected, rowSelected, colSelected, def, error, planned}: CellProps) {
-
-
     return ( 
         <div id={id+","+row+","+col+","+group} onClick={handleCellClick}
         style={{ display: "flex", width: "10%", aspectRatio: "1", border: "1px solid black", 
@@ -33,8 +31,8 @@ export function Cell({ id, row, col, group, value, selected, selectedValue, hand
         groupSelected == group ? "lightblue" : 
         rowSelected == row ? "lightblue" : colSelected == col ? "lightblue" : "",
         }}> 
-           <span style={{fontSize: "1.5rem", fontWeight: def ? "bold" : ""}}>{value != 0 ? value : ""}</span>
-           <span>{planned}</span>
+            <span>{planned.split("")}</span>
+            <span style={{fontSize: "1.5rem", fontWeight: def ? "bold" : ""}}>{value != 0 ? value : ""}</span>
         </div>
     )
 

@@ -23,12 +23,12 @@ export function Board({newBoard}: BoardProps) {
     const [selectedRow, setSelectedRow] = useState<number>(-1)
     const [selectedCol, setSelectedCol] = useState<number>(-1)
     const [error, setError] = useState(-1)
-    const [plan, setPlan] = useState(true)
+    const [plan, setPlan] = useState(false)
 
     useEffect(() => {
         document.addEventListener('keydown', keyDownEvent)
         return () => document.removeEventListener('keydown', keyDownEvent)
-    }, [selectedCell, error])
+    }, [selectedCell, error, planned, plan])
 
     const keyDownEvent = (event: any) => {
         changeValue(event.key)
@@ -39,9 +39,6 @@ export function Board({newBoard}: BoardProps) {
             return
         }        
         if (won){
-            return
-        }if (plan){
-            changePlanValue(id)
             return
         }
         if (arrowMap.has(id) && error === -1){
@@ -67,13 +64,16 @@ export function Board({newBoard}: BoardProps) {
         if (!keys.includes(id)){
             return
         }
+        if (plan){
+            changePlanValue(id)
+            return
+        }
             const tempBoard = [...board]
             tempBoard[selectedCell] = parseInt(id)
             setBoard(tempBoard) 
     }
 
     const changePlanValue = (id: string) => {
-        if (keys.includes(id) && id != "0"){
             let p = [...planned]
             let value = p[selectedCell]
             if (!value.includes(id)){
@@ -83,7 +83,6 @@ export function Board({newBoard}: BoardProps) {
             }
 
             setPlanned(p)
-        }
     }
 
     useEffect(() => {
@@ -174,7 +173,7 @@ export function Board({newBoard}: BoardProps) {
             <Keyboard board={board} keyPressed={handleKeyboard}></Keyboard>
             <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "40%"}}>
                 <div>
-                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); e.currentTarget.blur()}}>
+                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); setPlanned(Array(81).fill("")); e.currentTarget.blur()}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                         <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                         <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
@@ -184,7 +183,7 @@ export function Board({newBoard}: BoardProps) {
                 </div>
                 <div>
                     <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={() => setPlan(!plan)}> {plan ? "On" : "Off"}</Button>
-                    <h6 style={{alignSelf: "center"}}>Notes</h6>
+                    <h6>Notes</h6>
                 </div>
             </div>
             </Card>
