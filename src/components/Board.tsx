@@ -1,4 +1,4 @@
-import { Button, Card, Container, Row } from "react-bootstrap"
+import { Button, ButtonGroup, Card, Container, Row } from "react-bootstrap"
 import { Cell }  from "./Cell"
 import { useState, useEffect } from "react"
 import { Keyboard } from "./Keyboard"
@@ -157,7 +157,7 @@ export function Board({newBoard}: BoardProps) {
 
     return(
             
-            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px", aspectRatio: "7/9"}}>
+            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px"}}>
             <Card.Title style={{height: "30px",}}>
                 {won ? "Board Complete!" : ""}
             </Card.Title>
@@ -172,13 +172,21 @@ export function Board({newBoard}: BoardProps) {
                 )}
             </Row> )}
             <Keyboard board={board} keyPressed={handleKeyboard}></Keyboard>
-            <Button style={{marginTop: "2%", marginBottom: "2%"}} onClick={(e) => {won ? undefined : setBoard(newBoard); e.currentTarget.blur()}}>
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
-                <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
-                </svg>
-                <span> Reset Board</span>
-            </Button>
+            <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "40%"}}>
+                <div>
+                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); e.currentTarget.blur()}}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
+                        </svg>
+                    </Button>
+                    <h6>Restart</h6>
+                </div>
+                <div>
+                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={() => setPlan(!plan)}> {plan ? "On" : "Off"}</Button>
+                    <h6 style={{alignSelf: "center"}}>Notes</h6>
+                </div>
+            </div>
             </Card>
         
     )
