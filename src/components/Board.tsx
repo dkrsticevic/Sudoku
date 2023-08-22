@@ -64,7 +64,7 @@ export function Board({newBoard}: BoardProps) {
         if (!keys.includes(id)){
             return
         }
-        if (plan){
+        if (plan && id != "0"){
             changePlanValue(id)
             return
         }
@@ -161,9 +161,9 @@ export function Board({newBoard}: BoardProps) {
                 {won ? "Board Complete!" : ""}
             </Card.Title>
             {[...Array(9)].map((e, i) =>        
-            <Row style={{display: "flex",  justifyContent: "center", alignItems: "center", width: "100%"}}>
+            <Row key={i} style={{display: "flex",  justifyContent: "center", alignItems: "center", width: "100%"}}>
                 {[...Array(9)].map((e, k) =>
-                <Cell id={((i*9)+k)} row={i} col={k} group={(Math.floor((i)/3)*3 + Math.floor((k)/3))}
+                <Cell key={((i*9)+k)} id={((i*9)+k)} row={i} col={k} group={(Math.floor((i)/3)*3 + Math.floor((k)/3))}
                  value={board[(i*9)+k]} selected={selectedCell} selectedValue={board[selectedCell]} handleCellClick={handleCellClick}
                  groupSelected={selectedGroup} rowSelected={selectedRow} colSelected={selectedCol} def={newBoard[(i*9)+k] != 0} error={error}
                  planned={planned[(i*9)+k]}
@@ -175,7 +175,7 @@ export function Board({newBoard}: BoardProps) {
                 <div>
                     <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); setPlanned(Array(81).fill("")); e.currentTarget.blur()}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
+                        <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                         <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
                         </svg>
                     </Button>
