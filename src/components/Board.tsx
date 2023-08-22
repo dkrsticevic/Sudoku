@@ -155,8 +155,8 @@ export function Board({newBoard}: BoardProps) {
     }
 
     return(
-            
-            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px"}}>
+            <Row m={2} s={1} lg={2} style={{marginTop: "20px", display: "flex", justifyContent: "center", columnGap: "50px", alignItems: "center", width: "100%"}}>
+            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px", paddingBottom: "30px"}}>
             <Card.Title style={{height: "30px",}}>
                 {won ? "Board Complete!" : ""}
             </Card.Title>
@@ -170,8 +170,23 @@ export function Board({newBoard}: BoardProps) {
                  ></Cell>
                 )}
             </Row> )}
+            </Card>
+
+            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", width: "300px", paddingTop: "30px"}}>
             <Keyboard board={board} keyPressed={handleKeyboard}></Keyboard>
-            <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "40%"}}>
+            <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "100%", textAlign: "center"}}>
+                <div>
+                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={() => setPlan(!plan)}> {plan ? "On" : "Off"}</Button>
+                    <h6>Notes</h6>
+                </div>
+                <div>
+                <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} id="0" onClick={handleKeyboard}>
+                <svg xmlns="http://www.w3.org/2000/svg" width="1.5rem" height="1.5rem" fill="currentColor" className="bi bi-eraser-fill" viewBox="0 0 18 18">
+                <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
+                </svg>
+                </Button>
+                <h6>Eraser</h6>
+                </div>
                 <div>
                     <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); setPlanned(Array(81).fill("")); e.currentTarget.blur()}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
@@ -181,12 +196,9 @@ export function Board({newBoard}: BoardProps) {
                     </Button>
                     <h6>Restart</h6>
                 </div>
-                <div>
-                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={() => setPlan(!plan)}> {plan ? "On" : "Off"}</Button>
-                    <h6>Notes</h6>
-                </div>
             </div>
             </Card>
+            </Row>
         
     )
 }
