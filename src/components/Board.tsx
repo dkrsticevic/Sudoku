@@ -120,22 +120,25 @@ export function Board({newBoard}: BoardProps) {
 
     function checkError() {
         let set = new Set()
+        let col = selectedCell %9
+        let row = Math.floor(selectedCell/9)
+        let boxCol = col < 3 ? 0 : col < 6 ? 3 : 6    
+        let boxRow =  row < 3 ? -1 : row < 6 ? 2 : 5    
+
         for (let i = 0; i < 9; i++) {
-            for (let j = 0; j < 9; j++) {
-                const value = board[i*9+j]
-                if (value != 0) {
-                    const row = `${value} at row ${i}`
-                    const column = `${value} at column ${j}`
-                    const box = `${value} at box ${Math.floor(i/3)}, ${Math.floor(j/3)}`
-                    if (set.has(row) || set.has(column) || set.has(box)) {
-                        setError(selectedCell)
-                        return false
-                    } else {
-                        set.add(row)
-                        set.add(column)
-                        set.add(box)
-                    }
-                }
+            if ( i % 3 == 0){ boxRow = boxRow +1 }
+
+            let colText = board[(row*9)+i] +"c"
+            let rowText = board[(i*9)+col] +"r"
+            let boxText = board[((boxRow*9) + (boxCol+(i%3)))] +"b"
+
+            if (set.has(colText) || set.has(rowText) || set.has(boxText)) {
+                setError(selectedCell)
+                return false
+            } else{
+                if (board[(row*9)+i] != 0) set.add(colText)
+                if (board[(i*9)+col] != 0) set.add(rowText)
+                if (board[((boxRow*9) + (boxCol+(i%3)))] != 0) set.add(boxText)
             }
         }
         setError(-1)
@@ -188,7 +191,7 @@ export function Board({newBoard}: BoardProps) {
                 <h6>Eraser</h6>
                 </div>
                 <div>
-                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined : setBoard(newBoard); setPlanned(Array(81).fill("")); e.currentTarget.blur()}}>
+                    <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={(e) => {won ? undefined :setBoard(newBoard); setError(-1); setPlanned(Array(81).fill("")); e.currentTarget.blur()}}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-clockwise" viewBox="0 0 16 16">
                         <path fillRule="evenodd" d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z"/>
                         <path d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z"/>
