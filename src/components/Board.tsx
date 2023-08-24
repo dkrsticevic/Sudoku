@@ -57,14 +57,18 @@ export function Board({newBoard}: BoardProps) {
             return
         }
         if (id === "Backspace"){
-            const tempBoard = [...board]
-            tempBoard[selectedCell] = 0
-            setBoard(tempBoard)
+            if (plan) {
+                changePlanValue(id)
+            }else {
+                const tempBoard = [...board]
+                tempBoard[selectedCell] = 0
+                setBoard(tempBoard)
+            }
         }
         if (!keys.includes(id)){
             return
         }
-        if (plan && id != "0"){
+        if (plan){
             changePlanValue(id)
             return
         }
@@ -76,10 +80,15 @@ export function Board({newBoard}: BoardProps) {
     const changePlanValue = (id: string) => {
             let p = [...planned]
             let value = p[selectedCell]
-            if (!value.includes(id)){
-                p[selectedCell] = p[selectedCell] ? p[selectedCell] + id : id
+
+            if (id == "0" || id == "Backspace"){
+                p[selectedCell] = p[selectedCell].slice(0,-1)
             }else{
-                p[selectedCell] = p[selectedCell].replace(id, '')
+                if (!value.includes(id)){
+                    p[selectedCell] = p[selectedCell] ? p[selectedCell] + id : id
+                }else{
+                    p[selectedCell] = p[selectedCell].replace(id, '')
+                }
             }
 
             setPlanned(p)
