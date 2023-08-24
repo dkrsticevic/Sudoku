@@ -34,7 +34,7 @@ export function Cell({ id, row, col, group, value, selected, selectedValue, hand
         {value != 0 ? <span style={{fontSize: "1.5rem", fontWeight: def ? "bold" : ""}}>{value != 0 ? value : ""}</span>
          : 
             <div style={{display: "flex", flexWrap: "wrap", color: "#3f3f40", height: "100%", width: "100%", fontSize: ".7rem"}}>
-                {["1","2","3","4","5","6","7","8","9"].map(i => <div style={{flexGrow: 1, width: "33%", height: "33%", textAlign: "center"}}>{planned.includes(i) ? i : " "}</div>)}
+                {["1","2","3","4","5","6","7","8","9"].map(i => <div key={i} style={{flexGrow: 1, width: "33%", height: "33%", textAlign: "center"}}>{planned.includes(i) ? i : " "}</div>)}
             </div>
         }
         </div>
