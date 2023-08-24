@@ -86,8 +86,11 @@ export function Board({newBoard}: BoardProps) {
     }
 
     useEffect(() => {
-        if (selectedCell != -1)
-        checkError();
+        if (selectedCell != -1){
+            if (checkError() && board[selectedCell] != 0) {
+                checkNotes()
+            }
+        }
     }, [board])
 
     const handleKeyboard = (e: React.MouseEvent<HTMLElement>) =>{
@@ -111,7 +114,6 @@ export function Board({newBoard}: BoardProps) {
             setSelectedCol(-1);
             return
         }
-
         setSelectedCell(parseInt(values[0]));
         setSelectedGroup(parseInt(values[3]));
         setSelectedRow(parseInt(values[1]));
@@ -145,6 +147,29 @@ export function Board({newBoard}: BoardProps) {
         checkWin();
         return true
     };
+
+    function checkNotes(){
+        let value = board[selectedCell].toString()
+        const notes = [...planned]
+        let col = selectedCell %9
+        let row = Math.floor(selectedCell/9)
+        let boxCol = col < 3 ? 0 : col < 6 ? 3 : 6    
+        let boxRow =  row < 3 ? -1 : row < 6 ? 2 : 5 
+        console.log(value)   
+
+        for (let i = 0; i < 9; i++) {
+            if ( i % 3 == 0){ boxRow = boxRow +1 }
+
+            notes[(row*9)+i] = notes[(row*9)+i].replace(value, "")
+            notes[(i*9)+col] = notes[(i*9)+col].replace(value, "")
+            notes[((boxRow*9) + (boxCol+(i%3)))] = notes[((boxRow*9) + (boxCol+(i%3)))].replace(value, "")
+            console.log(notes[(row*9)+i])
+        }
+
+
+        setPlanned(notes)
+    }
+
 
     function checkWin() {
         let temp: string = JSON.stringify(board)
