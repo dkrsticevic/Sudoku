@@ -12,7 +12,7 @@ export function Keyboard({keyPressed, board} : KeyboardProps) {
     }
 
     return (
-        <Container> 
+        <Container style={{width: "90%"}}> 
             <Row style={{display: "flex",  justifyContent: "center", alignItems: "center", width: "100%", margin: "2px"}}> 
             <Button style={{opacity: counts[1] == 9 ? ".7" : "", width: "30%", aspectRatio: "1", fontSize: "1.5rem", marginRight: "2px"}} id="1" onClick={keyPressed}>1</Button>
             <Button style={{opacity: counts[2] == 9 ? ".7" : "", width: "30%", aspectRatio: "1", fontSize: "1.5rem", marginRight: "2px"}} id="2" onClick={keyPressed}>2</Button>

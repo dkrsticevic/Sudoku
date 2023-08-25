@@ -194,15 +194,19 @@ export function Board({newBoard}: BoardProps) {
         setError(-1); 
         setPlanned(Array(81).fill("")); 
         setWon(false)
+        setSelectedCell(-1)
+        setSelectedCol(-1)
+        setSelectedGroup(-1)
+        setSelectedRow(-1)
         e.currentTarget.blur()
     }
 
     return(
+        <>
+            {won ? "Board Complete!" : ""}
+
             <Row m={2} s={1} lg={2} style={{marginTop: "20px", display: "flex", justifyContent: "center", columnGap: "50px", alignItems: "center", width: "100%"}}>
-            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", minWidth: "400px", width: "650px", paddingBottom: "30px"}}>
-            <Card.Title style={{height: "30px",}}>
-                {won ? "Board Complete!" : ""}
-            </Card.Title>
+            <Card style={{marginTop: "10px", display: "flex", justifyContent: "center", alignItems: "center", maxWidth: "600px", width: "100%", padding: "20px 0px 20px 0px"}}>
             {[...Array(9)].map((e, i) =>        
             <Row key={i} style={{display: "flex",  justifyContent: "center", alignItems: "center", width: "100%"}}>
                 {[...Array(9)].map((e, k) =>
@@ -215,9 +219,9 @@ export function Board({newBoard}: BoardProps) {
             </Row> )}
             </Card>
 
-            <Card style={{marginTop: "20px", display: "flex", justifyContent: "center", alignItems: "center", width: "300px", paddingTop: "30px"}}>
+            <Card style={{marginTop: "10px", display: "flex", justifyContent: "center", alignItems: "center", maxWidth: "280px", paddingTop: "20px"}}>
             <Keyboard board={board} keyPressed={handleKeyboard}></Keyboard>
-            <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "100%", textAlign: "center"}}>
+            <div style={{display: "flex", marginTop: "5px", justifyContent: "space-around", width: "85%", textAlign: "center"}}>
                 <div>
                     <Button style={{borderRadius: "50%", height: "50px", aspectRatio: "1/1"}} onClick={() => setPlan(!plan)}> {plan ? "On" : "Off"}</Button>
                     <h6>Notes</h6>
@@ -242,6 +246,6 @@ export function Board({newBoard}: BoardProps) {
             </div>
             </Card>
             </Row>
-        
+        </>
     )
 }
