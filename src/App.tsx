@@ -43,7 +43,7 @@ function App() {
         { newGame ? 
         <DifficultySelect handleDiffSelect={handleDiffSelect}></DifficultySelect>
         :
-        <Board newBoard={board}></Board>
+        <Board newBoard={board} newGame={setNewGame}></Board>
       }
       </Container>
     </>

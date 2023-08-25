@@ -1,6 +1,6 @@
-import { Button, ButtonGroup, Card, Container, Row } from "react-bootstrap"
+import { Button, Card, Row } from "react-bootstrap"
 import { Cell }  from "./Cell"
-import { useState, useEffect } from "react"
+import { useState, useEffect, SetStateAction, Dispatch } from "react"
 import { Keyboard } from "./Keyboard"
 
 const keys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0"]
@@ -12,9 +12,10 @@ arrowMap.set("ArrowLeft", -1)
 
 type BoardProps = {
     newBoard : number[]
+    newGame: Dispatch<SetStateAction<boolean>>
 }
 
-export function Board({newBoard}: BoardProps) {
+export function Board({newBoard, newGame}: BoardProps) {
     const [board, setBoard] = useState<number[]>(newBoard)
     const [planned, setPlanned] = useState<string[]>(Array(81).fill(""))
     const [selectedCell, setSelectedCell] = useState<number>(-1)
@@ -202,11 +203,18 @@ export function Board({newBoard}: BoardProps) {
     }
 
     return(
-        <>
-            {won ? "Board Complete!" : ""}
-
             <Row m={2} s={1} lg={2} style={{marginTop: "20px", display: "flex", justifyContent: "center", columnGap: "50px", alignItems: "center", width: "100%"}}>
             <Card style={{marginTop: "10px", display: "flex", justifyContent: "center", alignItems: "center", maxWidth: "600px", width: "100%", padding: "20px 0px 20px 0px"}}>
+            {won && 
+            <div style={{position: "absolute", background: "rgba(74, 74, 74, 0.4)", width: "100%", height: "100%", borderRadius: "5px", textAlign: "center",
+            display: "flex", justifyContent: "center", alignItems: "center", color: "white", fontSize: "50px", flexDirection: "column"}}>
+                <span>Board Complete!</span>
+                <span style={{width: "100%"}}>
+                <Button style={{height: "50px", width: "120px", marginRight: "5px"}} onClick={(e) => handleRestart(e)}>Restart</Button>
+                <Button style={{height: "50px", width: "120px", marginLeft: "5px"}} onClick={(e) => newGame(true)}>New Game</Button>
+                </span>
+            </div>
+            }
             {[...Array(9)].map((e, i) =>        
             <Row key={i} style={{display: "flex",  justifyContent: "center", alignItems: "center", width: "100%"}}>
                 {[...Array(9)].map((e, k) =>
@@ -246,6 +254,5 @@ export function Board({newBoard}: BoardProps) {
             </div>
             </Card>
             </Row>
-        </>
     )
 }
