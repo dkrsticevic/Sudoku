@@ -31,7 +31,8 @@ export function Cell({ id, row, col, group, value, selected, selectedValue, hand
         selectedValue == value && value != 0 ? "dodgerblue" : 
         groupSelected == group ? "lightblue" : 
         rowSelected == row ? "lightblue" : colSelected == col ? "lightblue" : "", padding: "0"}}> 
-        {value != 0 ? <span style={{fontSize: "100%", fontWeight: def ? "bold" : ""}}>{value != 0 ? value : ""}</span>
+        {value != 0 ? <span style={{height: "100%", width: "100%", fontSize: "100%", display: "flex", justifyContent: "center", alignItems: "center", fontWeight: def ? "bold" : ""}}>
+            {value != 0 ? value : ""}</span>
          : 
             <div style={{display: "flex", flexWrap: "wrap", color: "#3f3f40", height: "100%", width: "100%", fontSize: "50%", alignItems: "center"}}>
                 {["1","2","3","4","5","6","7","8","9"].map(i => <div key={i} style={{flexGrow: 1, width: "33%", height: "33%", textAlign: "center"}}>{planned.includes(i) ? i : " "}</div>)}
